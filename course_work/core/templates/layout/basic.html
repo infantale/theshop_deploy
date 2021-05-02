@@ -1,0 +1,87 @@
+{% load bootstrap4 %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>
+    {% block title %}The Shop{% endblock %}
+  </title>
+
+  {% bootstrap_css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+  {% bootstrap_javascript jquery='slim' %}
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light ">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">the shop</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'core:other' page='about' %}">О Сайте</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Магазин</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Оценка образов</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Доска объявлений</a>
+        </li>
+      </ul>
+    </div>
+    {% if user.is_authenticated %}
+      <button type="button" class="btn btn-secondary"><a href="{% url 'core:profile' %}">Мой профиль</a></button>
+      <button type="button" class="btn btn-danger ml-1"><a href="{% url 'core:logout' %}">Выйти</a></button>
+    {% else %}
+      <button type="button" class="btn btn-dark"><a href="{% url 'core:login' %}">Войти</a></button>
+    {% endif %}
+  </div>
+</nav>
+
+  <header>
+
+  </header>
+
+  <!-- Page Content -->
+  <div class="container">
+    <div class="row">
+      <div class="col-10 offset-2 flex">
+        {% bootstrap_messages %}
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark fixed-bottom">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Зинченко Семён 201-322 2021</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+
+
+</body>
+
+</html>

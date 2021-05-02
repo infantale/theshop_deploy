@@ -1,0 +1,28 @@
+/* page 602 */
+body {
+  margin: 0;
+  padding: 0
+}
+
+.content {
+  /* position: fixed; */
+  height: 100%;
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.h100 {
+  margin-top: auto;
+}
+
+.btn a {
+  color: #fff;
+}
+
+.btn a:visited {
+  color: #fff;
+}
