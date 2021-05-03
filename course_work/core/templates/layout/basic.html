@@ -44,6 +44,11 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Доска объявлений</a>
         </li>
+        {% if not user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:register' %}">Регистрация</a>
+          </li>
+        {% endif %}
       </ul>
     </div>
     {% if user.is_authenticated %}

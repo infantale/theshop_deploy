@@ -4,6 +4,7 @@
 
 {% block content %}
   <h2>Профиль пользователя {{ user.username }}</h2>
+  <button type="button" class="btn btn-warning w-20"><a href="{% url 'core:profile_change' %}">Изменить личные данные</a></button>
   {% if user.first_name and user.second_name %}
     <p>Здравствуйте, {{ user.first_name }}!</p>
   {% else %}
