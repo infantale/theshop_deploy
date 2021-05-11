@@ -1,0 +1,14 @@
+{% extends "layout/basic.html" %}
+
+{% load bootstrap4 %}
+
+{% block title %}Удалить {{ bb.title }}?{% endblock %}
+
+{% block content %}
+  <h2>Удалить объявление?</h2>
+  <form method="post">
+    {% csrf_token %}
+
+    {% buttons submit='Удалить' %}{% endbuttons %}
+  </form>
+{% endblock %}

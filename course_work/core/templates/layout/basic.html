@@ -21,22 +21,18 @@
 
 </head>
 
-<body>
+<body class="container-fluid">
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-light ">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">the shop</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+
+  <div class="row mt-1">
+    <a class="navbar-brand ml-3" href="#">the shop</a>
+      <ul class="col nav ">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{% url 'core:other' page='about' %}">О Сайте</a>
+          <a class="nav-link" aria-current="page" href="{% url 'core:other' page='about' %}">О Сайте</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Магазин</a>
+          <a class="nav-link" href="{% url 'core:index' %}">Магазин</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Оценка образов</a>
@@ -49,35 +45,41 @@
             <a class="nav-link" href="{% url 'core:register' %}">Регистрация</a>
           </li>
         {% endif %}
+
       </ul>
-    </div>
+      <div class="float_right mr-1">
+
     {% if user.is_authenticated %}
       <button type="button" class="btn btn-secondary"><a href="{% url 'core:profile' %}">Мой профиль</a></button>
       <button type="button" class="btn btn-danger ml-1"><a href="{% url 'core:logout' %}">Выйти</a></button>
     {% else %}
       <button type="button" class="btn btn-dark"><a href="{% url 'core:login' %}">Войти</a></button>
     {% endif %}
+    </div>
   </div>
-</nav>
+
 
   <header>
 
   </header>
 
   <!-- Page Content -->
-  <div class="container">
-    <div class="row">
-      <div class="col-10 offset-2 flex">
-        {% bootstrap_messages %}
-        {% block content %}
-        {% endblock %}
-      </div>
-    </div>
-  </div>
-  <!-- /.container -->
+      <div class="row">
+        <nav class="col-md-auto nav flex-column mt-3">
+            {% block left_nav %}
+            {% endblock %}
+          </nav>
+          <section class="col py-2">
+            {% bootstrap_messages %}
+            {% block content %}
+            {% endblock %}
+          </section>
+        </div>
 
+  <!-- /.container -->
+<!-- 632 -->
   <!-- Footer -->
-  <footer class="py-5 bg-dark fixed-bottom">
+  <footer class="py-5 bg-dark ">
     <div class="container">
       <p class="m-0 text-center text-white">Copyright &copy; Зинченко Семён 201-322 2021</p>
     </div>

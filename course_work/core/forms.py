@@ -1,8 +1,9 @@
 from django import forms
+from django.forms import inlineformset_factory
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
 
-from .models import AdvUser
+from .models import AdvUser, SuperCategory, SubCategory, Bb, AddiionalImage
 
 class ChangeUserInfoForm(forms.ModelForm):
     class Meta:
@@ -44,3 +45,21 @@ class RegisterUserFrom(forms.ModelForm):
     class Meta:
         model = AdvUser
         fields = ('username', 'email', 'password1', 'password2', 'first_name', 'last_name')
+
+
+class SubCategoryForm(forms.ModelForm):
+    super_category = forms.ModelChoiceField(queryset=SuperCategory.objects.all(), \
+                        empty_label=None, label='Надкатегория', required=True)
+    class Meta:
+        model = SubCategory
+        fields = '__all__'
+
+
+class BbForm(forms.ModelForm):
+    class Meta:
+        model = Bb
+        fields = '__all__'
+        widgets = {'author': forms.HiddenInput}
+
+
+AIFormSet = inlineformset_factory(Bb, AddiionalImage, fields = '__all__')
