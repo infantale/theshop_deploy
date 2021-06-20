@@ -1,16 +1,62 @@
 {% extends 'layout/basic.html' %}
 
+{% load thumbnail %}
+{% load static %}
+{% load bootstrap4 %}
+
 {% block title %}Профиль {{ user.username }}{% endblock %}
 
 {% block content %}
-  <h2>Профиль пользователя {{ user.username }}</h2>
+  <h1 class="hero__heading">Профиль пользователя {{ user.username }}</h1>
   <button type="button" class="btn btn-warning w-20"><a href="{% url 'core:profile_change' %}">Изменить личные данные</a></button>
   {% if user.first_name and user.second_name %}
-    <p>Здравствуйте, {{ user.first_name }}!</p>
+    <p class="profile__description">Здравствуйте, {{ user.first_name }}!</p>
   {% else %}
-    <p>Здравствуйте!</p>
+    <p class="profile__description">Здравствуйте!</p>
   {% endif %}
-  <h3>Ваши объявления</h3>
+  <p class="profile__description">Ваши объявления:</p>
+  {% for bb in bbs %}
+
+  <div class="main" id="sign-up">
+    <div class="main__container">
+      <div class="main__content">
+        <h1>{{ bb.title }}</h1>
+        <h2>{{ bb.content }}</h2>
+        <p>{{ bb.price }} руб. Контакты: {{ bb.contacts }}</p>
+      </div>
+      <div class="main__img--container">
+        <div class="main__img--card" id="card-2">
+          {% if bb.image %}
+          <img src="{{ bb.image.url }}"
+          class="main-image">
+          {% endif %}
+        </div>
+      </div>
+      </div>
+    </div>
+
+  {% endfor %}
   <a href="{% url 'core:profile_bb_add' %}">Добавить объявление</a>
-  <h3>Ваши образы</h3>
+  <p class="profile__description">Ваши образы:</p>
+
+  {% for outfit in outfits %}
+  <div class="main" id="about">
+    <div class="main__container">
+      <div class="main__img--container">
+        {% if outfit.image %}
+        <img class="mr-3" src="{% thumbnail outfit.image 'default' %}">
+        {% else %}
+        <img class="mr-3" src="{% static 'main/empty.jpg' %}">
+        {% endif %}
+      </div>
+      <div class="main__content">
+        <h1>{{ outfit.title }}</h1>
+        <h2>{{ outfit.price }} руб.</h2>
+        <p>Лайки: {{ outfit.fans|length }}</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <a href="{% url 'core:profile_outfit_add' %}">Добавить образ</a>
 {% endblock %}

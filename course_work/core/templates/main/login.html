@@ -4,9 +4,9 @@
 {% block title %}Вход{% endblock %}
 
 {% block content %}
-  <h2 class="mt-5">Вход</h2>
+  <h1 class="hero__heading">Вход</h1>
   {% if user.is_authenticated %}
-    <p>Вы уже выполнили вход.</p>
+    <h1 class="hero__heading">Вы уже выполнили вход.</h1>
   {% else %}
     <form class="" method="post">
       {% csrf_token %}

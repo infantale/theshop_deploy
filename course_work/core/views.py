@@ -14,7 +14,8 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
 
-from .forms import ChangeUserInfoForm, RegisterUserFrom, BbForm, AIFormSet
+from api.models import Outfit
+from .forms import ChangeUserInfoForm, RegisterUserFrom, BbForm, AIFormSet, OutfitForm
 from .models import AdvUser, Bb, SubCategory
 # Create your views here.
 
@@ -22,6 +23,10 @@ def index(request):
     bbs = Bb.objects.filter(is_active=True)[:10]
     context = {'bbs': bbs}
     return render(request, 'main/index.html', context)
+
+
+def about(request):
+    return render(request, 'main/about.html')
 
 
 def other_page(request, page):
@@ -35,16 +40,15 @@ def other_page(request, page):
 
 def detail(request, category_pk, pk):
     bb = get_object_or_404(Bb, pk=pk)
-    ais = '' # bb.additionalimage_set.all()
-    context = {'bb': bb, 'ais': ais}
-    return render(request, 'main/detail.html')
+    user_id = request.user.pk
+    context = {'bb': bb, 'user_id': user_id}
+    return render(request, 'main/detail.html', context)
 
 
 def by_category(request, pk):
     category = get_object_or_404(SubCategory, pk=pk)
     bbs = Bb.objects.filter(is_active=True, category=pk)
-    paginator = Paginator(bbs, 1)
-    keyword = ''
+    paginator = Paginator(bbs, 2)
     if 'page' in request.GET:
         page_num = request.GET['page']
     else:
@@ -58,7 +62,8 @@ def by_category(request, pk):
 @login_required
 def profile(request):
     bbs = Bb.objects.filter(author=request.user.pk)
-    context = {'bbs': bbs}
+    outfits = Outfit.objects.filter(author=request.user.pk)
+    context = {'bbs': bbs, 'outfits': outfits}
     return render(request, 'main/profile.html', context)
 
 
@@ -116,6 +121,46 @@ def profile_bb_delete(request, pk):
     else:
         context = {'bb': bb}
         return render(request, 'main/profile_bb_delete.html', context)
+
+
+@login_required
+def profile_outfit_add(request):
+    if request.method == 'GET':
+        form = OutfitForm(initial={'author': request.user.pk})
+    else:
+        form = OutfitForm(request.POST, request.FILES)
+        if form.is_valid():
+            outf = form.save()
+            messages.add_message(request, messages.SUCCESS, 'Образ добавлен')
+            return redirect('core:profile')
+    context = {'form': form}
+    return render(request, 'main/profile_outfit_add.html', context)
+
+@login_required
+def profile_outfit_change(request, pk):
+    outfit = get_object_or_404(Outfit, pk=pk)
+    if request.method == 'GET':
+        form = OutfitForm(instance=outfit)
+    else:
+        form = OutfitForm(request.POST, request.FILES, instance=outfit)
+        if form.is_valid():
+            if form.has_changed():
+                form.save()
+                messages.add_message(request, messages.SUCCESS, 'Образ изменён')
+                return redirect('core:profile')
+    context = {'form': form}
+    return render(request, 'main/profile_outfit_change.html', context)
+
+
+@login_required
+def profile_outfit_delete(request, pk):
+    outfit = get_object_or_404(Outfit, pk=pk)
+    if request.method == 'GET':
+        return render(request, 'main/profile_outfit_delete.html', context={'outfit': outfit})
+    else:
+        outfit.delete()
+        messages.add_message(request, messages.SUCCESS, 'Образ удалён')
+        return redirect('core:profile')
 
 
 class TSLoginView(LoginView):

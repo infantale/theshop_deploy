@@ -7,32 +7,29 @@
 {% block title %}{{ category }}{% endblock %}
 
 {% block content %}
-  {% if bbs %}
-<ul class="list-unstyled">
+{% if bbs %}
+<div class="services__wrap">
   {% for bb in bbs %}
-  <li class="media my-5 p-3 border">
+  <div class="neumorphismrubric__box">
     {% url 'core:detail' category_pk=category.pk pk=bb.pk as url %}
-    <a href="{{ url }}{{ all }}">
+
       {% if bb.image %}
-      <img class="mr-3" src="{% thumbnail bb.image 'default' %}">
+      <img class="services__card--image" src="{% thumbnail bb.image 'default' %}">
       {% else %}
       <img class="mr-3" src="{% static 'main/empty.jpg' %}">
       {% endif %}
-    </a>
-    <div class="media-body">
-      <h3><a href="{{ url }}{{ all }}">
-        {{ bb.title }}</a></h3>
-        <div>{{ bb.content }}</div>
-        <p class="text-right font-weight-bold">{{ bb.price }} руб.</p>
-        <p class="text-right font-italic">{{ bb.created_at }}</p>
+
+    <h2><a href="{% url 'core:detail' category_pk=bb.category_id pk=bb.pk %}" class="box__link">
+      {{ bb.title }}</a></h2>
+      <p>{{ bb.content }}</p>
+      <p class="text-right font-weight-bold">{{ bb.price }} руб.</p>
+    </div>
+  {% endfor %}
 </div>
-</li>
-{% endfor %}
-</ul>
 <nav aria-label="...">
   <ul class="pagination">
     <li class="page-item disabled">
-      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+      <a class="page-link pagination__link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
     </li>
 
 
@@ -44,13 +41,13 @@
       </li>
       {% else %}
       <li class="page-item" aria-current="page">
-        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+        <a class="page-link pagination__link" href="?page={{ i }}">{{ i }}</a>
       </li>
       {% endif %}
     {% endfor %}
 
     <li class="page-item">
-      <a class="page-link" href="#">Next</a>
+      <a class="page-link pagination__link" href="#">Next</a>
     </li>
   </ul>
 </nav>

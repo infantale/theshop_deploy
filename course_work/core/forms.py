@@ -4,6 +4,7 @@ from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
 
 from .models import AdvUser, SuperCategory, SubCategory, Bb, AddiionalImage
+from api.models import Outfit
 
 class ChangeUserInfoForm(forms.ModelForm):
     class Meta:
@@ -62,4 +63,14 @@ class BbForm(forms.ModelForm):
         widgets = {'author': forms.HiddenInput}
 
 
+class OutfitForm(forms.ModelForm):
+    class Meta:
+        model = Outfit
+        fields = ('title', 'price', 'image', 'author')
+        widgets = {'author': forms.HiddenInput}
+
+
+# Наборы форм (formsets) используются, когда форма должна обработать несколько
+# моделей. Django также предоставляет наборы форм, к-рые можно использовать
+# для обработки абора объектов, принадлежащих общему внешнему ключу.
 AIFormSet = inlineformset_factory(Bb, AddiionalImage, fields = '__all__')

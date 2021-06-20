@@ -1,4 +1,4 @@
-{% load bootstrap4 %}
+<!-- {% load bootstrap4 %} -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -10,6 +10,15 @@
 
   <meta name="description" content="">
   <meta name="author" content="">
+  <link
+  rel="stylesheet"
+  href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+  integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
+  crossorigin="anonymous"
+  />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <title>
     {% block title %}The Shop{% endblock %}
@@ -19,76 +28,126 @@
   <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
   {% bootstrap_javascript jquery='slim' %}
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js" ></script>
+
 </head>
 
-<body class="container-fluid">
+<body>
 
   <!-- Navigation -->
 
-  <div class="row mt-1">
-    <a class="navbar-brand ml-3" href="#">the shop</a>
-      <ul class="col nav ">
-        <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="{% url 'core:other' page='about' %}">О Сайте</a>
+
+  <nav class="navbar">
+    <div class="navbar__container">
+      <a href="{% url 'core:about_project' %}" id="navbar__logo">The Shop</a>
+      <div class="navbar__toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <ul class="navbar__menu">
+        <li class="navbar__item">
+          <a href="{% url 'core:about_project' %}" class="navbar__links" id="home-page">About</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'core:index' %}">Магазин</a>
+        <li class="navbar__item">
+          <a href="{% url 'core:index' %}" class="navbar__links" id="about-page">Marketplace</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Оценка образов</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Доска объявлений</a>
+        <li class="navbar__item">
+          <a href="{% url 'api:page_outfits' %}" class="navbar__links" id="services-page"
+          >Outfits</a
+          >
         </li>
         {% if not user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'core:register' %}">Регистрация</a>
-          </li>
+        <li class="navbar__btn">
+          <a href="{% url 'core:register' %}" class="authed__btn" id="">Registration</a>
+        </li>
+        <li class="navbar__btn">
+          <a href="{% url 'core:login' %}" class="button" id="signup">Log In</a>
+        </li>
+        {% else %}
+        <li class="navbar__btn">
+          <a href="{% url 'core:profile' %}" class="authed__btn" id="">Profile</a>
+        </li>
+        <li class="navbar__btn">
+          <a href="{% url 'core:logout' %}" class="button" id="">LogOut</a>
+        </li>
         {% endif %}
-
       </ul>
-      <div class="float_right mr-1">
-
-    {% if user.is_authenticated %}
-      <button type="button" class="btn btn-secondary"><a href="{% url 'core:profile' %}">Мой профиль</a></button>
-      <button type="button" class="btn btn-danger ml-1"><a href="{% url 'core:logout' %}">Выйти</a></button>
-    {% else %}
-      <button type="button" class="btn btn-dark"><a href="{% url 'core:login' %}">Войти</a></button>
-    {% endif %}
     </div>
-  </div>
+  </nav>
 
+  {% block about %}
+  {% endblock %}
 
-  <header>
-
-  </header>
 
   <!-- Page Content -->
-      <div class="row">
-        <nav class="col-md-auto nav flex-column mt-3">
-            {% block left_nav %}
-            {% endblock %}
-          </nav>
-          <section class="col py-2">
-            {% bootstrap_messages %}
-            {% block content %}
-            {% endblock %}
-          </section>
-        </div>
 
-  <!-- /.container -->
-<!-- 632 -->
+  <div style="background: #131313">
+    {% block left_nav %}
+    {% endblock %}
+  </div>
+  <section class="services">
+    {% block content %}
+    {% endblock %}
+    {% bootstrap_messages %}
+  </section>
+
   <!-- Footer -->
-  <footer class="py-5 bg-dark ">
-    <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Зинченко Семён 201-322 2021</p>
-    </div>
-    <!-- /.container -->
+  <footer class="footer__container">
+    <section class="social__media">
+      <div class="social__media--wrap">
+        <div class="footer__logo">
+          <a href="{% url 'core:about_project' %}" id="footer__logo">The Shop</a>
+        </div>
+        <p class="website__rights">© The Shop 2021. All rights reserved</p>
+        <div class="social__icons">
+          <a href="/" class="social__icon--link" target="_blank"
+            ><i class="fab fa-facebook"></i
+          ></a>
+          <a href="https://www.instagram.com/toxicpzd/" class="social__icon--link"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a href="/" class="social__icon--link"
+            ><i class="fab fa-youtube"></i
+          ></a>
+          <a href="/" class="social__icon--link"
+            ><i class="fab fa-linkedin"></i
+          ></a>
+          <a href="/" class="social__icon--link"
+            ><i class="fab fa-twitter"></i
+          ></a>
+        </div>
+      </div>
+    </section>
   </footer>
 
-  <!-- Bootstrap core JavaScript -->
+<script type="text/javascript">
+  const menu = document.querySelector("#mobile-menu");
+  const menuLinks = document.querySelector(".navbar__menu");
+  const navLogo = document.querySelector("#navbar__logo")
 
+  // Display mobile menu
+  const mobileMenu = () => {
+    menu.classList.toggle("is-active");
+    menuLinks.classList.toggle("active");
+  };
+
+  menu.addEventListener("click", mobileMenu);
+
+  // Close mobile Menu when clicking a menu item
+  const hideMobileMenu = () => {
+    const menuBars = document.querySelector(".is-active");
+    if (window.innerWidth <= 768 && menuBars) {
+      menu.classList.toggle("is-active")
+      menuLinks.classList.remove("active")
+    }
+  }
+
+  menuLinks.addEventListener("click", hideMobileMenu);
+  navLogo.addEventListener("click", hideMobileMenu);
+
+</script>
 
 </body>
-
 </html>

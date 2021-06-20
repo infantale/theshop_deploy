@@ -5,36 +5,32 @@
 {% block title %}{{ bb.title }} - {{ bb.category.name }}{% endblock %}
 
 {% block content %}
-  <div class="container-fluid mt-3">
-    <div class="row">
-    {% if bb.image %}
-      <div class="col-md-auto"Ximg src="{{ bb.image.url }}"
-      class="main-image"></div>
-    {% endif %}
-    <div class="col">
-      <h2>{{ bb.title }}</h2>
-      <p>{{ bb.content }}</p>
-      <p class="font-weight-bold">{{ bb.price }} руб.</p>
-      <p>{{ bb.contacts }}</p>
-      <p class="text-right font-italic">Добавлено
-      {{ bb.created_at }}</p>
+<div class="main" id="sign-up">
+  <div class="main__container">
+    <div class="main__content">
+      <h1>{{ bb.title }}</h1>
+      <h2>{{ bb.content }}</h2>
+      <p>{{ bb.price }} руб. Контакты: {{ bb.contacts }}</p>
+    </div>
+    <div class="main__img--container">
+      <div class="main__img--card" id="card-2">
+        {% if bb.image %}
+        <img src="{{ bb.image.url }}"
+        class="main-image">
+        {% endif %}
+      </div>
     </div>
     </div>
+  </div>
+
+  {% if user_id == bb.author_id %}
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-danger mt-2 mb-2 "><a href="{% url 'core:profile_bb_delete' pk=bb.pk %}">Удалить</a></button>
+      <button type="button" class="btn btn-warning mt-2 mb-2 ml-3"><a href="{% url 'core:profile_bb_change' pk=bb.pk %}">Изменить</a></button>
     </div>
-    {% if ais %}
-    <div class="d-flex justify-content-between flex-wrap mt-5">
-    {% for ai in ais %}
-    <div>
-    <img class="additional-image" src="{{ ai.image.url }}">
-    </div>
-    {% endfor %}
-    </div>
-    {% endif %}
-    <p><a href="{% url 'core:by_category' pk=bb.category.pk %}{{ all }}">
+  {% endif %}
+
+  <p><a href="{% url 'core:by_category' pk=bb.category.pk %}{{ all }}">
     Назад</a></p>
-
-
-
-
 
 {% endblock %}

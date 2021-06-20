@@ -20,6 +20,11 @@ from django.conf.urls.static import static
 from django.contrib.staticfiles.views import serve
 from django.views.decorators.cache import never_cache
 
+# Регистрируем api
+# apipatterns = [
+#     url(r'^', include('api.urls'))
+# ]
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),

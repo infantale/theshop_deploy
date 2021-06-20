@@ -6,7 +6,7 @@
 
 
 {% block content %}
-  <h2>Добавление объявления</h2>
+  <h1 class="hero__heading">Изменение объявления</h1>
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form form layout='horizontal' %}

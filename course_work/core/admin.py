@@ -38,6 +38,10 @@ class BbAdmin(admin.ModelAdmin):
     inlines = (AddiionalImageInline,)
 
 
+class OutfitAdmin(admin.ModelAdmin):
+    fields = ('author', 'title', 'price', 'image')
+
+
 admin.site.register(AdvUser, AdvUserAdmin)
 admin.site.register(SuperCategory, SuperCategoryAdmin)
 admin.site.register(SubCategory, SubCategoryAdmin)
