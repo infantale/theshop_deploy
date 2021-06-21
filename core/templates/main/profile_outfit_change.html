@@ -1,0 +1,15 @@
+{% extends "layout/basic.html" %}
+
+{% load bootstrap4 %}
+
+(% block title %}Изменение Образа - Профиль пользователя{% endblock }
+
+
+{% block content %}
+  <h1 class="hero__heading">Добавление объявления</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form layout='horizontal' %}
+    {% buttons submit='Изменить' %}{% endbuttons %}
+  </form>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "layout/basic.html" %}
+
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}Пользовательские образы{% endblock %}
+
+{% block content %}
+
+{% verbatim %}
+
+<div class="container" id="outfits_app">
+  <div class="c" v-for="outfit in outfits">
+    <li class="media my-5 p-3 neumorphism-box">
+      <img :src="outfit.image" class="outfit__img" alt="" height="250">
+      <div class="media-body mb-1">
+        <h3 class="ml-3">
+          {{ outfit.title }}
+        </h3>
+        <p class="text-right font-weight-bold">{{ outfit.price }} руб.</p>
+        <div v-if="current_user.current_user in outfit.likes" class="liked-container">
+          <p v-if="likeFlag" class="text-right font-italic">Вы уже оценили этот образ!</p>
+          <div class="like-content">
+            <a
+            v-bind:href="'/api/outfit/'+ outfit.id +'/like/'"
+            onclick="return false"
+            class="right btn-secondary like-review ">
+            <i class="fa fa-heart liked" aria-hidden="true"></i> Liked
+          </a>
+        </div>
+      </div>
+      <div v-else class="like-content">
+        <a
+        @click="pressLike"
+        v-bind:href="'/api/outfit/'+ outfit.id +'/like/'"
+        class="right btn-secondary like-review">
+        <i class="fa fa-heart" aria-hidden="true"></i> Like
+      </a>
+    </div>
+  </div>
+</li>
+</div>
+</div>
+
+{% endverbatim %}
+<script src="{% static 'main/main.js' %}"></script>
+{% endblock %}

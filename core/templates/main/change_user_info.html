@@ -1,0 +1,14 @@
+{% extends 'layout/basic.html' %}
+{% load bootstrap4 %}
+
+{% block title %}Правка личных данных{% endblock %}
+
+{% block content %}
+  <h1 class="hero__heading">Правка личных данных пользователя {{ user.username }}</h1>
+  <form class="" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form layout='horizontal' background='danger'%}
+    {% buttons submit='Сохранить' %}{% endbuttons %}
+  </form>
+  <a class="nav-link" href="{% url 'core:profile_delete' %}">Удалить профиль?</a>
+{% endblock %}
