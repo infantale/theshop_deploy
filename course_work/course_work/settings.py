@@ -20,7 +20,7 @@ SECRET_KEY = 'django-insecure-o9yxpqdxe=4*pto8fy*lfr%!=o^qxx)!-7ku7rr4oye2qz$b(%
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'theshopsaimon.herokuapp.com']
 
 DATABASES = {
     'default': {
