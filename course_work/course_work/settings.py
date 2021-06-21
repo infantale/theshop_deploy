@@ -16,6 +16,19 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SECRET_KEY = 'django-insecure-o9yxpqdxe=4*pto8fy*lfr%!=o^qxx)!-7ku7rr4oye2qz$b(%'
+
+DEBUG = True
+
+ALLOWED_HOSTS = []
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'shop.data',
+    }
+}
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -110,7 +123,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -136,7 +149,7 @@ THUMBNAIL_BASEDIR = 'thumbnails'
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'/api/.*$'
 
-try:
-    from .local_settings import *
-except ImportError:
-    from .prod_settings import *
+# try:
+#     from .local_settings import *
+# except ImportError:
+#     from .prod_settings import *
