@@ -16,19 +16,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-o9yxpqdxe=4*pto8fy*lfr%!=o^qxx)!-7ku7rr4oye2qz$b(%'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = ['']
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -83,13 +70,6 @@ WSGI_APPLICATION = 'course_work.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'shop.data',
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -129,11 +109,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
 
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static')
-# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -142,6 +118,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEADIA_URL = '/media'
+
+ADMINS = ['zinchieko02@mail.ru']
 
 THUMBNAIL_ALIASES = {
     '': {
@@ -156,3 +134,8 @@ THUMBNAIL_BASEDIR = 'thumbnails'
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'/api/.*$'
+
+try:
+    from .local_settings import *
+except ImportError:
+    from .prod_settings import *
